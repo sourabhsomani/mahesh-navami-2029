@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;700&family=Playfair+Display:wght@700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 11pt;
+    color: #1a1a1a;
+    background: #fff;
+    padding: 0;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 14mm 16mm 14mm 16mm;
+    background: #fff;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    border: 2.5px double #7b4a00;
+    padding: 10px 12px 8px;
+    margin-bottom: 10px;
+    background: #fffbf3;
+    position: relative;
+  }
+  .header::before, .header::after {
+    content: '❖';
+    position: absolute;
+    font-size: 14px;
+    color: #c0860a;
+    top: 6px;
+  }
+  .header::before { left: 8px; }
+  .header::after { right: 8px; }
+
+  .header .om {
+    font-size: 22pt;
+    color: #c0860a;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .header .org {
+    font-size: 9pt;
+    color: #7b4a00;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26pt;
+    font-weight: 700;
+    color: #7b1a00;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .header .subtitle {
+    font-size: 13pt;
+    color: #c0860a;
+    font-weight: 700;
+    margin: 2px 0 1px;
+  }
+  .header .occasion {
+    font-size: 10pt;
+    color: #555;
+    margin-top: 3px;
+  }
+  .header .occasion span {
+    color: #7b1a00;
+    font-weight: 700;
+  }
+
+  /* INFO ROW */
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #c0860a;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    background: #fffbf3;
+    font-size: 9.5pt;
+  }
+  .info-row .cell {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .info-row .label { color: #7b4a00; font-weight: 700; }
+  .info-row .val { color: #1a1a1a; }
+
+  /* CANDIDATE BOX */
+  .candidate-box {
+    border: 1px solid #aaa;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 20px;
+    font-size: 9.5pt;
+    background: #f9f9f9;
+  }
+  .candidate-box .field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+  }
+  .candidate-box .field label { color: #555; white-space: nowrap; }
+  .candidate-box .field .line {
+    flex: 1;
+    border-bottom: 1px solid #888;
+    min-width: 60px;
+    height: 16px;
+  }
+
+  /* INSTRUCTIONS */
+  .instructions {
+    border: 1px solid #c0860a;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+    background: #fffdf7;
+    font-size: 8.5pt;
+  }
+  .instructions .title {
+    font-weight: 700;
+    color: #7b1a00;
+    margin-bottom: 4px;
+    font-size: 9pt;
+  }
+  .instructions ol {
+    padding-left: 16px;
+    color: #333;
+    line-height: 1.7;
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0 6px;
+  }
+  .section-badge {
+    padding: 3px 12px;
+    font-size: 9pt;
+    font-weight: 700;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .badge-easy    { background: #d4edda; color: #155724; border: 1px solid #a8d5b5; }
+  .badge-medium  { background: #fff3cd; color: #856404; border: 1px solid #f0d080; }
+  .badge-hard    { background: #fde2d0; color: #7b2500; border: 1px solid #f0a878; }
+  .badge-xhard   { background: #e8d5f5; color: #4a0080; border: 1px solid #c090e0; }
+
+  .section-line { flex: 1; height: 1px; background: #ddd; }
+  .section-marks {
+    font-size: 8pt;
+    color: #888;
+    white-space: nowrap;
+  }
+
+  /* QUESTION */
+  .question {
+    margin-bottom: 7px;
+    page-break-inside: avoid;
+  }
+  .q-stem {
+    display: flex;
+    gap: 5px;
+    font-size: 9.5pt;
+    font-weight: 500;
+    color: #111;
+    margin-bottom: 3px;
+    line-height: 1.4;
+  }
+  .q-num {
+    min-width: 22px;
+    font-weight: 700;
+    color: #7b1a00;
+    flex-shrink: 0;
+  }
+  .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 12px;
+    padding-left: 27px;
+    font-size: 9pt;
+    color: #222;
+    line-height: 1.5;
+  }
+  .option {
+    display: flex;
+    gap: 4px;
+    align-items: flex-start;
+  }
+  .opt-label { font-weight: 700; color: #555; min-width: 16px; }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px dashed #ccc;
+    margin: 4px 0 4px;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 12px;
+    border-top: 2px solid #c0860a;
+    padding-top: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8pt;
+    color: #888;
+  }
+  .footer .blessing {
+    font-size: 9pt;
+    color: #c0860a;
+    font-weight: 700;
+    text-align: center;
+    flex: 1;
+  }
+
+  /* PAGE BREAK */
+  .page-break { page-break-before: always; }
+
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; padding: 12mm 14mm; }
+    .no-print { display: none; }
+  }
+
+  .print-btn {
+    display: block;
+    margin: 16px auto 0;
+    padding: 10px 28px;
+    background: #7b1a00;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 11pt;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .print-btn:hover { background: #a02500; }
+</style>
+</head>
+<body>
+
+<div class="no-print" style="text-align:center; padding: 10px; background:#fffbf3; border-bottom:1px solid #e0b060;">
+  <strong style="color:#7b4a00;">Preview ready!</strong> &nbsp;|&nbsp; Click the button below to save as PDF
+  <br><button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+</div>
+
+<!-- ======================== PAGE 1 ======================== -->
+<div class="page">
+
+  <div class="header">
+    <div class="om">ॐ</div>
+    <div class="org">श्री महेश्वरी समाज</div>
+    <h1>Genius Hunt</h1>
+    <div class="subtitle">धार्मिक सामान्य ज्ञान प्रतियोगिता</div>
+    <div class="occasion">आयोजन: <span>महेश जयंती 2026</span></div>
+  </div>
+
+  <div class="info-row">
+    <div class="cell"><span class="label">कुल प्रश्न:</span><span class="val">70</span></div>
+    <div class="cell"><span class="label">समय:</span><span class="val">60 मिनट</span></div>
+    <div class="cell"><span class="label">अंक:</span><span class="val">Easy 1 | Medium 2 | Hard 3 | Extra Hard 4</span></div>
+    <div class="cell"><span class="label">दिनांक:</span><span class="val">__________</span></div>
+  </div>
+
+  <div class="candidate-box">
+    <div class="field"><label>नाम:</label><div class="line"></div></div>
+    <div class="field"><label>उम्र:</label><div class="line" style="min-width:40px;"></div></div>
+    <div class="field"><label>मोबाइल:</label><div class="line"></div></div>
+    <div class="field"><label>क्रमांक:</label><div class="line" style="min-width:50px;"></div></div>
+  </div>
+
+  <div class="instructions">
+    <div class="title">📋 निर्देश / Instructions</div>
+    <ol>
+      <li>सभी प्रश्न बहुविकल्पीय (MCQ) हैं। प्रत्येक प्रश्न के लिए केवल एक सही उत्तर चुनें।</li>
+      <li>उत्तर-पत्रक में सही विकल्प के अक्षर (A/B/C/D) को स्पष्ट रूप से लिखें।</li>
+      <li>कठिनाई स्तर: Easy (1–20), Medium (21–40), Hard (41–60), Extra Hard (61–70)।</li>
+      <li>गलत उत्तर के लिए कोई नकारात्मक अंक नहीं है।</li>
+      <li>किसी भी प्रकार की नकल / मोबाइल का उपयोग वर्जित है।</li>
+    </ol>
+  </div>
+
+  <!-- EASY -->
+  <div class="section-header">
+    <span class="section-badge badge-easy">✦ EASY — प्रश्न 1 से 20</span>
+    <span class="section-line"></span>
+    <span class="section-marks">प्रत्येक प्रश्न: 1 अंक</span>
+  </div>
+
+  <!-- Q1 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">1.</span><span>भगवान श्रीराम की पत्नी कौन थीं?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> उर्मिला</div>
+      <div class="option"><span class="opt-label">B.</span> सीता</div>
+      <div class="option"><span class="opt-label">C.</span> द्रौपदी</div>
+      <div class="option"><span class="opt-label">D.</span> रुक्मिणी</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q2 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">2.</span><span>श्रीकृष्ण का जन्म कहाँ हुआ था?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> द्वारका</div>
+      <div class="option"><span class="opt-label">B.</span> वृंदावन</div>
+      <div class="option"><span class="opt-label">C.</span> मथुरा</div>
+      <div class="option"><span class="opt-label">D.</span> गोकुल</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q3 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">3.</span><span>गणेश जी का वाहन क्या है?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> सिंह</div>
+      <div class="option"><span class="opt-label">B.</span> मोर</div>
+      <div class="option"><span class="opt-label">C.</span> चूहा</div>
+      <div class="option"><span class="opt-label">D.</span> हाथी</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q4 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">4.</span><span>हनुमान जी की माता कौन थीं?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> कौशल्या</div>
+      <div class="option"><span class="opt-label">B.</span> अंजना</div>
+      <div class="option"><span class="opt-label">C.</span> सुमित्रा</div>
+      <div class="option"><span class="opt-label">D.</span> उर्मिला</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q5 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">5.</span><span>गीता का उपदेश किसने दिया?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> शिव</div>
+      <div class="option"><span class="opt-label">B.</span> कृष्ण</div>
+      <div class="option"><span class="opt-label">C.</span> ब्रह्मा</div>
+      <div class="option"><span class="opt-label">D.</span> नारद</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q6 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">6.</span><span>वेद कितने हैं?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> 2</div>
+      <div class="option"><span class="opt-label">B.</span> 3</div>
+      <div class="option"><span class="opt-label">C.</span> 4</div>
+      <div class="option"><span class="opt-label">D.</span> 5</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q7 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">7.</span><span>दीपावली किसके अयोध्या लौटने पर मनाई जाती है?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> कृष्ण</div>
+      <div class="option"><span class="opt-label">B.</span> राम</div>
+      <div class="option"><span class="opt-label">C.</span> भरत</div>
+      <div class="option"><span class="opt-label">D.</span> हनुमान</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q8 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">8.</span><span>महाशिवरात्रि किस देवता का पर्व है?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> विष्णु</div>
+      <div class="option"><span class="opt-label">B.</span> शिव</div>
+      <div class="option"><span class="opt-label">C.</span> गणेश</div>
+      <div class="option"><span class="opt-label">D.</span> सूर्य</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q9 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">9.</span><span>रक्षाबंधन किस रिश्ते का त्योहार है?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> पति-पत्नी</div>
+      <div class="option"><span class="opt-label">B.</span> भाई-बहन</div>
+      <div class="option"><span class="opt-label">C.</span> मित्र</div>
+      <div class="option"><span class="opt-label">D.</span> गुरु-शिष्य</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q10 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">10.</span><span>रामायण के रचयिता कौन हैं?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> तुलसीदास</div>
+      <div class="option"><span class="opt-label">B.</span> वेदव्यास</div>
+      <div class="option"><span class="opt-label">C.</span> वाल्मीकि</div>
+      <div class="option"><span class="opt-label">D.</span> वशिष्ठ</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q11 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">11.</span><span>श्रीराम के पिता कौन थे?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> जनक</div>
+      <div class="option"><span class="opt-label">B.</span> दशरथ</div>
+      <div class="option"><span class="opt-label">C.</span> भरत</div>
+      <div class="option"><span class="opt-label">D.</span> विश्वामित्र</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q12 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">12.</span><span>कृष्ण की माता कौन थीं?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> यशोदा</div>
+      <div class="option"><span class="opt-label">B.</span> देवकी</div>
+      <div class="option"><span class="opt-label">C.</span> रुक्मिणी</div>
+      <div class="option"><span class="opt-label">D.</span> कुंती</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q13 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">13.</span><span>होली किस भक्त की विजय का प्रतीक है?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> ध्रुव</div>
+      <div class="option"><span class="opt-label">B.</span> प्रह्लाद</div>
+      <div class="option"><span class="opt-label">C.</span> विभीषण</div>
+      <div class="option"><span class="opt-label">D.</span> सुदामा</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q14 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">14.</span><span>सरस्वती देवी किसकी देवी हैं?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> धन</div>
+      <div class="option"><span class="opt-label">B.</span> शक्ति</div>
+      <div class="option"><span class="opt-label">C.</span> विद्या</div>
+      <div class="option"><span class="opt-label">D.</span> कृषि</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q15 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">15.</span><span>सूर्य देव के पुत्र कौन माने जाते हैं?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> कर्ण</div>
+      <div class="option"><span class="opt-label">B.</span> अर्जुन</div>
+      <div class="option"><span class="opt-label">C.</span> भीम</div>
+      <div class="option"><span class="opt-label">D.</span> युधिष्ठिर</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q16 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">16.</span><span>राम का जन्म किस नगर में हुआ?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> मथुरा</div>
+      <div class="option"><span class="opt-label">B.</span> अयोध्या</div>
+      <div class="option"><span class="opt-label">C.</span> काशी</div>
+      <div class="option"><span class="opt-label">D.</span> उज्जैन</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q17 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">17.</span><span>गणेश चतुर्थी किस देवता को समर्पित है?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> शिव</div>
+      <div class="option"><span class="opt-label">B.</span> गणेश</div>
+      <div class="option"><span class="opt-label">C.</span> विष्णु</div>
+      <div class="option"><span class="opt-label">D.</span> कार्तिकेय</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q18 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">18.</span><span>महेश्वरी समाज के आराध्य देव?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> विष्णु</div>
+      <div class="option"><span class="opt-label">B.</span> शिव (महेश)</div>
+      <div class="option"><span class="opt-label">C.</span> सूर्य</div>
+      <div class="option"><span class="opt-label">D.</span> गणेश</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q19 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">19.</span><span>श्रीकृष्ण के बड़े भाई कौन थे?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> उद्धव</div>
+      <div class="option"><span class="opt-label">B.</span> बलराम</div>
+      <div class="option"><span class="opt-label">C.</span> अर्जुन</div>
+      <div class="option"><span class="opt-label">D.</span> सुदामा</div>
+    </div>
+  </div>
+  <hr class="divider">
+
+  <!-- Q20 -->
+  <div class="question">
+    <div class="q-stem"><span class="q-num">20.</span><span>भगवान विष्णु का वाहन?</span></div>
+    <div class="options">
+      <div class="option"><span class="opt-label">A.</span> नंदी</div>
+      <div class="option"><span class="opt-label">B.</span> गरुड़</div>
+      <div class="option"><span class="opt-label">C.</span> सिंह</div>
+      <div class="option"><span class="opt-label">D.</span> ऐरावत</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Genius Hunt 2026</span>
+    <span class="blessing">॥ हर हर महादेव ॥ &nbsp; जय महेश ॥</span>
+    <span>पृष्ठ 1 / 4</span>
+  </div>
+</div>
+
+<!-- ======================== PAGE 2 ======================== -->
+<div class="page page-break">
+
+  <div class="header">
+    <div class="om">ॐ</div>
+    <h1>Genius Hunt</h1>
+    <div class="occasion">महेश जयंती 2026 &nbsp;|&nbsp; <span>MEDIUM SECTION</span></div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-badge badge-medium">✦ MEDIUM — प्रश्न 21 से 40</span>
+    <span class="section-line"></span>
+    <span class="section-marks">प्रत्येक प्रश्न: 2 अंक</span>
+  </div>
+
+  <!-- Q21–Q40 -->
+  <div class="question"><div class="q-stem"><span class="q-num">21.</span><span>अर्जुन के धनुष का नाम?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> पिनाक</div><div class="option"><span class="opt-label">B.</span> गांडीव</div><div class="option"><span class="opt-label">C.</span> विजय</div><div class="option"><span class="opt-label">D.</span> शारंग</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">22.</span><span>भीष्म का वास्तविक नाम?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> देवव्रत</div><div class="option"><span class="opt-label">B.</span> शांतनु</div><div class="option"><span class="opt-label">C.</span> विचित्रवीर्य</div><div class="option"><span class="opt-label">D.</span> चित्रांगद</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">23.</span><span>लक्ष्मण की पत्नी कौन थीं?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> मांडवी</div><div class="option"><span class="opt-label">B.</span> उर्मिला</div><div class="option"><span class="opt-label">C.</span> श्रुतकीर्ति</div><div class="option"><span class="opt-label">D.</span> सीता</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">24.</span><span>मेघनाद का दूसरा नाम?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> इंद्रजीत</div><div class="option"><span class="opt-label">B.</span> अतिकाय</div><div class="option"><span class="opt-label">C.</span> अक्षयकुमार</div><div class="option"><span class="opt-label">D.</span> प्रहस्त</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">25.</span><span>अभिमन्यु की पत्नी?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> द्रौपदी</div><div class="option"><span class="opt-label">B.</span> सुभद्रा</div><div class="option"><span class="opt-label">C.</span> उत्तरा</div><div class="option"><span class="opt-label">D.</span> चित्रांगदा</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">26.</span><span>गंगा पुत्र कौन कहलाते हैं?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> कर्ण</div><div class="option"><span class="opt-label">B.</span> भीष्म</div><div class="option"><span class="opt-label">C.</span> अर्जुन</div><div class="option"><span class="opt-label">D.</span> विदुर</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">27.</span><span>कृष्ण के गुरु?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> वशिष्ठ</div><div class="option"><span class="opt-label">B.</span> संदीपनि ऋषि</div><div class="option"><span class="opt-label">C.</span> नारद</div><div class="option"><span class="opt-label">D.</span> व्यास</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">28.</span><span>समुद्र मंथन से निकला विष किसने पिया?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> विष्णु</div><div class="option"><span class="opt-label">B.</span> शिव</div><div class="option"><span class="opt-label">C.</span> ब्रह्मा</div><div class="option"><span class="opt-label">D.</span> इन्द्र</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">29.</span><span>द्रोणाचार्य के पुत्र?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> विकर्ण</div><div class="option"><span class="opt-label">B.</span> अश्वत्थामा</div><div class="option"><span class="opt-label">C.</span> कर्ण</div><div class="option"><span class="opt-label">D.</span> युयुत्सु</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">30.</span><span>श्रीराम को वनवास कितने वर्षों का मिला?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> 12</div><div class="option"><span class="opt-label">B.</span> 13</div><div class="option"><span class="opt-label">C.</span> 14</div><div class="option"><span class="opt-label">D.</span> 15</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">31.</span><span>रामसेतु का निर्माण किन वानरों ने कराया?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> सुग्रीव-हनुमान</div><div class="option"><span class="opt-label">B.</span> नल-नील</div><div class="option"><span class="opt-label">C.</span> अंगद-जाम्बवान</div><div class="option"><span class="opt-label">D.</span> विभीषण-हनुमान</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">32.</span><span>युधिष्ठिर किस देवता के अंश माने जाते हैं?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> इन्द्र</div><div class="option"><span class="opt-label">B.</span> धर्मराज</div><div class="option"><span class="opt-label">C.</span> सूर्य</div><div class="option"><span class="opt-label">D.</span> वायु</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">33.</span><span>तुलसीदास ने रामचरितमानस किस भाषा में लिखी?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> संस्कृत</div><div class="option"><span class="opt-label">B.</span> अवधी</div><div class="option"><span class="opt-label">C.</span> ब्रज</div><div class="option"><span class="opt-label">D.</span> प्राकृत</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">34.</span><span>कृष्ण की सेना का नाम?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> यादव सेना</div><div class="option"><span class="opt-label">B.</span> नारायणी सेना</div><div class="option"><span class="opt-label">C.</span> वृष्णि सेना</div><div class="option"><span class="opt-label">D.</span> द्वारका सेना</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">35.</span><span>गणगौर किस राज्य का प्रमुख पर्व है?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> गुजरात</div><div class="option"><span class="opt-label">B.</span> राजस्थान</div><div class="option"><span class="opt-label">C.</span> पंजाब</div><div class="option"><span class="opt-label">D.</span> बिहार</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">36.</span><span>भागवत पुराण में कितने स्कंध हैं?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> 10</div><div class="option"><span class="opt-label">B.</span> 12</div><div class="option"><span class="opt-label">C.</span> 14</div><div class="option"><span class="opt-label">D.</span> 18</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">37.</span><span>हनुमान जी ने लंका में सीता को कहाँ देखा?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> राजमहल</div><div class="option"><span class="opt-label">B.</span> अशोक वाटिका</div><div class="option"><span class="opt-label">C.</span> समुद्र तट</div><div class="option"><span class="opt-label">D.</span> मंदिर</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">38.</span><span>कुंती को कौन सा मंत्र प्राप्त था?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> नारायण मंत्र</div><div class="option"><span class="opt-label">B.</span> देव आह्वान मंत्र</div><div class="option"><span class="opt-label">C.</span> गायत्री मंत्र</div><div class="option"><span class="opt-label">D.</span> महामृत्युंजय</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">39.</span><span>रावण का पिता कौन था?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> पुलस्त्य</div><div class="option"><span class="opt-label">B.</span> विश्रवा</div><div class="option"><span class="opt-label">C.</span> सुमाली</div><div class="option"><span class="opt-label">D.</span> माली</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">40.</span><span>चार धाम में से गुजरात में कौन सा धाम है?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> बद्रीनाथ</div><div class="option"><span class="opt-label">B.</span> द्वारका</div><div class="option"><span class="opt-label">C.</span> रामेश्वरम्</div><div class="option"><span class="opt-label">D.</span> पुरी</div></div></div>
+
+  <div class="footer">
+    <span>Genius Hunt 2026</span>
+    <span class="blessing">॥ हर हर महादेव ॥ &nbsp; जय महेश ॥</span>
+    <span>पृष्ठ 2 / 4</span>
+  </div>
+</div>
+
+<!-- ======================== PAGE 3 ======================== -->
+<div class="page page-break">
+
+  <div class="header">
+    <div class="om">ॐ</div>
+    <h1>Genius Hunt</h1>
+    <div class="occasion">महेश जयंती 2026 &nbsp;|&nbsp; <span>HARD SECTION</span></div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-badge badge-hard">✦ HARD — प्रश्न 41 से 60</span>
+    <span class="section-line"></span>
+    <span class="section-marks">प्रत्येक प्रश्न: 3 अंक</span>
+  </div>
+
+  <div class="question"><div class="q-stem"><span class="q-num">41.</span><span>महाभारत युद्ध में पहला वीरगति प्राप्त योद्धा कौन माना जाता है?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> शल्य</div><div class="option"><span class="opt-label">B.</span> उत्तर कुमार</div><div class="option"><span class="opt-label">C.</span> विकर्ण</div><div class="option"><span class="opt-label">D.</span> दुर्मुख</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">42.</span><span>युयुत्सु किस पक्ष में लड़े?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> कौरव</div><div class="option"><span class="opt-label">B.</span> पांडव</div><div class="option"><span class="opt-label">C.</span> दोनों</div><div class="option"><span class="opt-label">D.</span> किसी में नहीं</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">43.</span><span>कर्ण का कवच-कुंडल किसने मांगा?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> कृष्ण</div><div class="option"><span class="opt-label">B.</span> इन्द्र</div><div class="option"><span class="opt-label">C.</span> सूर्य</div><div class="option"><span class="opt-label">D.</span> भीष्म</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">44.</span><span>अश्वत्थामा ने रात में किसका वध किया?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> पांडव</div><div class="option"><span class="opt-label">B.</span> उपपांडव</div><div class="option"><span class="opt-label">C.</span> पांचाल सेना</div><div class="option"><span class="opt-label">D.</span> विराट</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">45.</span><span>भीष्म को इच्छामृत्यु का वरदान किसने दिया?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> ब्रह्मा</div><div class="option"><span class="opt-label">B.</span> शांतनु</div><div class="option"><span class="opt-label">C.</span> परशुराम</div><div class="option"><span class="opt-label">D.</span> गंगा</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">46.</span><span>श्रीकृष्ण का शंख?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> देवदत्त</div><div class="option"><span class="opt-label">B.</span> पांचजन्य</div><div class="option"><span class="opt-label">C.</span> अनंतविजय</div><div class="option"><span class="opt-label">D.</span> पौण्ड्र</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">47.</span><span>पंचकन्याओं में कौन शामिल नहीं है?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> अहिल्या</div><div class="option"><span class="opt-label">B.</span> तारा</div><div class="option"><span class="opt-label">C.</span> मंदोदरी</div><div class="option"><span class="opt-label">D.</span> रुक्मिणी</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">48.</span><span>महाभारत का मूल नाम क्या था?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> जय</div><div class="option"><span class="opt-label">B.</span> भारत</div><div class="option"><span class="opt-label">C.</span> हरिवंश</div><div class="option"><span class="opt-label">D.</span> कुरुचरित</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">49.</span><span>द्रौपदी किस यज्ञ से उत्पन्न हुई थीं?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> राजसूय</div><div class="option"><span class="opt-label">B.</span> पुत्रकामेष्टि</div><div class="option"><span class="opt-label">C.</span> अग्निकुंड यज्ञ</div><div class="option"><span class="opt-label">D.</span> अश्वमेध</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">50.</span><span>शिशुपाल को कितनी गलतियाँ क्षमा करने का वचन था?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> 50</div><div class="option"><span class="opt-label">B.</span> 100</div><div class="option"><span class="opt-label">C.</span> 108</div><div class="option"><span class="opt-label">D.</span> 1000</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">51.</span><span>राजा परीक्षित किसके पुत्र थे?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> अर्जुन</div><div class="option"><span class="opt-label">B.</span> अभिमन्यु</div><div class="option"><span class="opt-label">C.</span> भीम</div><div class="option"><span class="opt-label">D.</span> नकुल</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">52.</span><span>रावण का नाना कौन था?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> पुलस्त्य</div><div class="option"><span class="opt-label">B.</span> सुमाली</div><div class="option"><span class="opt-label">C.</span> विश्रवा</div><div class="option"><span class="opt-label">D.</span> मारीच</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">53.</span><span>महाभारत में "दानवीर" किसे कहा गया?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> युधिष्ठिर</div><div class="option"><span class="opt-label">B.</span> कर्ण</div><div class="option"><span class="opt-label">C.</span> भीष्म</div><div class="option"><span class="opt-label">D.</span> अर्जुन</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">54.</span><span>देवव्रत को "भीष्म" नाम क्यों मिला?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> युद्ध कौशल</div><div class="option"><span class="opt-label">B.</span> भयंकर प्रतिज्ञा के कारण</div><div class="option"><span class="opt-label">C.</span> तपस्या</div><div class="option"><span class="opt-label">D.</span> वरदान</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">55.</span><span>महर्षि वेदव्यास के पिता कौन थे?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> वशिष्ठ</div><div class="option"><span class="opt-label">B.</span> पराशर</div><div class="option"><span class="opt-label">C.</span> पुलस्त्य</div><div class="option"><span class="opt-label">D.</span> नारद</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">56.</span><span>भगवान परशुराम विष्णु के कौन से अवतार हैं?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> पाँचवें</div><div class="option"><span class="opt-label">B.</span> छठे</div><div class="option"><span class="opt-label">C.</span> सातवें</div><div class="option"><span class="opt-label">D.</span> आठवें</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">57.</span><span>श्रीमद्भागवत किस राजा को सुनाई गई?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> जनक</div><div class="option"><span class="opt-label">B.</span> परीक्षित</div><div class="option"><span class="opt-label">C.</span> दशरथ</div><div class="option"><span class="opt-label">D.</span> युधिष्ठिर</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">58.</span><span>महाभारत में विकर्ण कौन था?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> पांडव</div><div class="option"><span class="opt-label">B.</span> न्यायप्रिय कौरव</div><div class="option"><span class="opt-label">C.</span> गुरु</div><div class="option"><span class="opt-label">D.</span> सेनापति</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">59.</span><span>अश्वमेध यज्ञ का घोड़ा कौन रोकता था?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> जो युद्ध की चुनौती देता था</div><div class="option"><span class="opt-label">B.</span> केवल राजा</div><div class="option"><span class="opt-label">C.</span> ब्राह्मण</div><div class="option"><span class="opt-label">D.</span> सेनापति</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">60.</span><span>रामायण में जटायु कौन थे?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> ऋषि</div><div class="option"><span class="opt-label">B.</span> गिद्धराज</div><div class="option"><span class="opt-label">C.</span> वानर</div><div class="option"><span class="opt-label">D.</span> देवता</div></div></div>
+
+  <div class="footer">
+    <span>Genius Hunt 2026</span>
+    <span class="blessing">॥ हर हर महादेव ॥ &nbsp; जय महेश ॥</span>
+    <span>पृष्ठ 3 / 4</span>
+  </div>
+</div>
+
+<!-- ======================== PAGE 4 ======================== -->
+<div class="page page-break">
+
+  <div class="header">
+    <div class="om">ॐ</div>
+    <h1>Genius Hunt</h1>
+    <div class="occasion">महेश जयंती 2026 &nbsp;|&nbsp; <span>EXTRA HARD — FINAL ROUND</span></div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-badge badge-xhard">✦ EXTRA HARD — प्रश्न 61 से 70</span>
+    <span class="section-line"></span>
+    <span class="section-marks">प्रत्येक प्रश्न: 4 अंक</span>
+  </div>
+
+  <div class="question"><div class="q-stem"><span class="q-num">61.</span><span>महाभारत में कर्ण का जन्म नाम क्या था?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> वसुसेन</div><div class="option"><span class="opt-label">B.</span> राधेय</div><div class="option"><span class="opt-label">C.</span> अंगराज</div><div class="option"><span class="opt-label">D.</span> सूर्यपुत्र</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">62.</span><span>विदुर किसके अवतार माने जाते हैं?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> धर्मराज (यमराज)</div><div class="option"><span class="opt-label">B.</span> इन्द्र</div><div class="option"><span class="opt-label">C.</span> वरुण</div><div class="option"><span class="opt-label">D.</span> चन्द्र</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">63.</span><span>अश्वत्थामा के मस्तक की मणि किसने निकाली?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> अर्जुन</div><div class="option"><span class="opt-label">B.</span> भीम</div><div class="option"><span class="opt-label">C.</span> श्रीकृष्ण के आदेश से अर्जुन</div><div class="option"><span class="opt-label">D.</span> युधिष्ठिर</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">64.</span><span>भीष्म ने शरशय्या पर कितने दिनों तक सूर्य के उत्तरायण होने की प्रतीक्षा की?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> लगभग 58 दिन</div><div class="option"><span class="opt-label">B.</span> 18 दिन</div><div class="option"><span class="opt-label">C.</span> 30 दिन</div><div class="option"><span class="opt-label">D.</span> 108 दिन</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">65.</span><span>भगवान कृष्ण की बहन का नाम क्या था?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> एकानंगा / सुभद्रा</div><div class="option"><span class="opt-label">B.</span> रुक्मिणी</div><div class="option"><span class="opt-label">C.</span> सत्यभामा</div><div class="option"><span class="opt-label">D.</span> द्रौपदी</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">66.</span><span>महाभारत में सबसे पहले शंख किसने बजाया?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> अर्जुन</div><div class="option"><span class="opt-label">B.</span> भीष्म पितामह</div><div class="option"><span class="opt-label">C.</span> कृष्ण</div><div class="option"><span class="opt-label">D.</span> द्रोण</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">67.</span><span>समुद्र मंथन से निकले घोड़े का नाम क्या था?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> उच्छैःश्रवा</div><div class="option"><span class="opt-label">B.</span> ऐरावत</div><div class="option"><span class="opt-label">C.</span> गरुड़</div><div class="option"><span class="opt-label">D.</span> चेतक</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">68.</span><span>भागवत पुराण के वक्ता कौन थे?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> वेदव्यास</div><div class="option"><span class="opt-label">B.</span> शुकदेव जी</div><div class="option"><span class="opt-label">C.</span> नारद</div><div class="option"><span class="opt-label">D.</span> पराशर</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">69.</span><span>कर्ण को अंगदेश का राजा किसने बनाया?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> धृतराष्ट्र</div><div class="option"><span class="opt-label">B.</span> दुर्योधन</div><div class="option"><span class="opt-label">C.</span> भीष्म</div><div class="option"><span class="opt-label">D.</span> शकुनि</div></div></div><hr class="divider">
+  <div class="question"><div class="q-stem"><span class="q-num">70.</span><span>महाभारत के अनुसार युद्ध के बाद हस्तिनापुर का उत्तराधिकारी कौन बना?</span></div><div class="options"><div class="option"><span class="opt-label">A.</span> अर्जुन</div><div class="option"><span class="opt-label">B.</span> युधिष्ठिर</div><div class="option"><span class="opt-label">C.</span> परीक्षित</div><div class="option"><span class="opt-label">D.</span> जनमेजय</div></div></div>
+
+  <!-- SCORE TABLE -->
+  <div style="margin-top: 14px; border: 1px solid #c0860a; background: #fffbf3; padding: 8px 12px;">
+    <div style="font-size: 9pt; font-weight: 700; color: #7b1a00; margin-bottom: 6px;">अंक तालिका / Score Summary</div>
+    <table style="width: 100%; font-size: 9pt; border-collapse: collapse;">
+      <thead>
+        <tr style="background: #7b1a00; color: #fff;">
+          <th style="padding: 4px 8px; text-align: left;">खंड</th>
+          <th style="padding: 4px 8px; text-align: center;">प्रश्न</th>
+          <th style="padding: 4px 8px; text-align: center;">अंक/प्रश्न</th>
+          <th style="padding: 4px 8px; text-align: center;">कुल</th>
+          <th style="padding: 4px 8px; text-align: center;">प्राप्त अंक</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 0.5px solid #ddd;">
+          <td style="padding: 4px 8px; color: #155724; font-weight: 700;">Easy</td>
+          <td style="padding: 4px 8px; text-align: center;">20</td>
+          <td style="padding: 4px 8px; text-align: center;">1</td>
+          <td style="padding: 4px 8px; text-align: center;">20</td>
+          <td style="padding: 4px 8px; text-align: center;">_____</td>
+        </tr>
+        <tr style="border-bottom: 0.5px solid #ddd;">
+          <td style="padding: 4px 8px; color: #856404; font-weight: 700;">Medium</td>
+          <td style="padding: 4px 8px; text-align: center;">20</td>
+          <td style="padding: 4px 8px; text-align: center;">2</td>
+          <td style="padding: 4px 8px; text-align: center;">40</td>
+          <td style="padding: 4px 8px; text-align: center;">_____</td>
+        </tr>
+        <tr style="border-bottom: 0.5px solid #ddd;">
+          <td style="padding: 4px 8px; color: #7b2500; font-weight: 700;">Hard</td>
+          <td style="padding: 4px 8px; text-align: center;">20</td>
+          <td style="padding: 4px 8px; text-align: center;">3</td>
+          <td style="padding: 4px 8px; text-align: center;">60</td>
+          <td style="padding: 4px 8px; text-align: center;">_____</td>
+        </tr>
+        <tr style="border-bottom: 0.5px solid #ddd;">
+          <td style="padding: 4px 8px; color: #4a0080; font-weight: 700;">Extra Hard</td>
+          <td style="padding: 4px 8px; text-align: center;">10</td>
+          <td style="padding: 4px 8px; text-align: center;">4</td>
+          <td style="padding: 4px 8px; text-align: center;">40</td>
+          <td style="padding: 4px 8px; text-align: center;">_____</td>
+        </tr>
+        <tr style="background: #7b1a00; color: #fff; font-weight: 700;">
+          <td style="padding: 4px 8px;">कुल / Total</td>
+          <td style="padding: 4px 8px; text-align: center;">70</td>
+          <td style="padding: 4px 8px; text-align: center;">—</td>
+          <td style="padding: 4px 8px; text-align: center;">160</td>
+          <td style="padding: 4px 8px; text-align: center;">_____</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top: 8px; text-align: center; font-size: 8pt; color: #888;">
+    हस्ताक्षर (प्रतिभागी): _______________________ &nbsp;&nbsp; हस्ताक्षर (परीक्षक): _______________________
+  </div>
+
+  <div class="footer">
+    <span>Genius Hunt 2026</span>
+    <span class="blessing">॥ हर हर महादेव ॥ &nbsp; जय महेश ॥</span>
+    <span>पृष्ठ 4 / 4</span>
+  </div>
+</div>
+
+</body>
+</html>
